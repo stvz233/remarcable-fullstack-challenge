@@ -31,6 +31,14 @@ def import_products_from_table(file_path):
                 }
             )
 
+            # if the product already exists, update its description, price, 
+            # and category to reflect any changes in the CSV file (idempotent).
+            if not created:
+                product.description = item['description']
+                product.price = Decimal(item['price'])
+                product.category = category_obj
+                product.save()
+
             # process tags, ensuring that existing tags are reused and new tags are created as needed.
             tag_names = [tag.strip() for tag in item['tags'].split(',')]
             for tag_name in tag_names:
