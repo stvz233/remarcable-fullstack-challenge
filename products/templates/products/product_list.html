@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .filter-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .tag-checkbox {
+            display: flex;
+            align-items: center;
+        }
+        .tag-checkbox input {
+            margin-right: 5px;
+        }
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .product-card h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .product-description {
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .product-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+        .product-category {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .product-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: #f0f0f0;
+            color: #555;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        .results-count {
+            margin-bottom: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Product Search</h1>
+
+        <div class="filter-section">
+            <form method="get" action="">
+                <div class="filter-group">
+                    <label for="search">Search by Description:</label>
+                    <input type="text" id="search" name="search" value="{{ search_query }}" placeholder="Enter keywords...">
+                </div>
+
+                <div class="filter-group">
+                    <label for="category">Filter by Category:</label>
+                    <select id="category" name="category">
+                        <option value="">All Categories</option>
+                        {% for cat in categories %}
+                            <option value="{{ cat.id }}" {% if selected_category == cat.id|stringformat:"s" %}selected{% endif %}>
+                                {{ cat.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Filter by Tags:</label>
+                    <div class="tags-container">
+                        {% for tag in tags %}
+                            <div class="tag-checkbox">
+                                <input type="checkbox" id="tag_{{ tag.id }}" name="tags" value="{{ tag.id }}"
+                                    {% if tag.id|stringformat:"s" in selected_tags %}checked{% endif %}>
+                                <label for="tag_{{ tag.id }}" style="margin: 0; font-weight: normal;">{{ tag.name }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-primary">Search</button>
+                    <button type="button" class="btn-secondary" onclick="window.location.href='{% url 'product_list' %}'">Clear Filters</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-count">
+            Found {{ products.count }} product{{ products.count|pluralize }}
+        </div>
+
+        <div class="products-grid">
+            {% if products %}
+                {% for product in products %}
+                    <div class="product-card">
+                        <h3>{{ product.name }}</h3>
+                        <div class="product-price">${{ product.price }}</div>
+                        <span class="product-category">{{ product.category.name }}</span>
+                        <p class="product-description">{{ product.description }}</p>
+                        <div class="product-tags">
+                            {% for tag in product.tags.all %}
+                                <span class="product-tag">{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-results">
+                    <p>No products found matching your criteria.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const params = new URLSearchParams();
+
+            const search = formData.get('search');
+            if (search) params.append('search', search);
+
+            const category = formData.get('category');
+            if (category) params.append('category', category);
+
+            const tags = formData.getAll('tags');
+            if (tags.length > 0) params.append('tags', tags.join(','));
+
+            window.location.href = '?' + params.toString();
+        });
+    </script>
+</body>
+</html>
