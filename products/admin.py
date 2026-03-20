@@ -26,7 +26,7 @@ class ProductAdmin(ImportExportModelAdmin):
     # adds a sidebar filter for category, tags, and creation date to improve navigation
     list_filter = ['category', 'tags', 'created_at']
     # improves discoverability by allowing keyword searches across product names and descriptions.
-    search_fields = ['name', 'description']
+    search_fields = ['name', 'category__name','description']
     filter_horizontal = ['tags']
     # Displays auto-generated timestamps in the detail view without allowing edits.
     readonly_fields = ['created_at', 'updated_at']
