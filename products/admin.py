@@ -2,9 +2,10 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import Category, Tag, Product
+from import_export.admin import ImportExportModelAdmin
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(ImportExportModelAdmin):
     # customizes the admin interface for the Category model,
     # allowing users to see the name and description fields, and search by name.
     list_display = ['name', 'description']
@@ -12,14 +13,14 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
+class TagAdmin(ImportExportModelAdmin):
     # allowing users to see the name field and search by name.
     list_display = ['name']
     search_fields = ['name']
 
 
 @admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(ImportExportModelAdmin):
     # allowing users to see the name, category, price, and creation date fields,
     list_display = ['name', 'category', 'price', 'created_at']
     # adds a sidebar filter for category, tags, and creation date to improve navigation
