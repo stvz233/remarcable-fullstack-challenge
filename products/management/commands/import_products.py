@@ -1,7 +1,14 @@
+import sys
 import django
 import os
 import csv
 from decimal import Decimal
+
+current_file_path = os.path.abspath(__file__)
+root_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(current_file_path))))
+
+if root_dir not in sys.path:
+    sys.path.append(root_dir)
 
 # initialize Django settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'inventory_management.settings')
@@ -49,4 +56,6 @@ def import_products_from_table(file_path):
             print(f"{status}: {product.name}")
 
 if __name__ == '__main__':
-    import_products_from_table('products.csv')
+    csv_file_path = os.path.join(root_dir, 'products.csv')
+    if os.path.exists(csv_file_path):
+        import_products_from_table(csv_file_path)
