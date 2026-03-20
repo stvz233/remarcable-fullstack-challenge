@@ -18,7 +18,10 @@ def product_list(request):
 
     # filter products based on the key words
     if search_query:
-        products = products.filter(Q(name__icontains=search_query))
+        products = products.filter(
+            Q(name__icontains=search_query) | 
+            Q(description__icontains=search_query)
+        )
 
     if category_id:
         products = products.filter(category_id=category_id)
