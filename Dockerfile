@@ -17,4 +17,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 ENV PORT=10000
 EXPOSE 10000
 
-CMD ["gunicorn", "inventory_management.wsgi:application", "--bind", "0.0.0.0:10000"]
+CMD python manage.py migrate && python manage.py import_products && gunicorn inventory_management.wsgi:application
