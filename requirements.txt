@@ -1,6 +1,6 @@
-django==6.0.3
-django-import-export==4.4.0
-tablib==3.9.0
-asgiref==3.11.1
-sqlparse==0.5.5
+django
+django-import-export
+tablib
+asgiref
+sqlparse
 gunicorn
