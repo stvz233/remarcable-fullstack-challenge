@@ -6,7 +6,7 @@ from .models import Product, Category, Tag
 def product_list(request):
     # retrieves all products from the database, along with their related category and tags,
     # (avoid N+1 query problem)
-    products = Product.objects.select_related('category').prefetch_related('tags').all()
+    products = Product.objects.select_related('category').prefetch_related('tags').order_by('name')
     categories = Category.objects.all()
     tags = Tag.objects.all()
 
