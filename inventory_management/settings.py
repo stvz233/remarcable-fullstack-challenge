@@ -30,6 +30,10 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
 ]
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 # Application definition
 # added the products app, which allowed Django to recognize and use the models, 
 # views, and other components defined in the products app.
