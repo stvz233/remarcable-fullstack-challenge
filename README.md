@@ -5,6 +5,8 @@ A full-stack product management system which developed for Remarcable technical 
 The application is successfully deployed and live on Render:
 **[https://remarcable-fullstack-challenge.onrender.com/](https://remarcable-fullstack-challenge.onrender.com/)**
 
+> **Note on the live demo:** The live deployment uses SQLite with Render's free tier, which has an ephemeral (non-persistent) filesystem. This means the database is re-created from `products.csv` on every deployment or service restart. As a result, any data added via the Admin interface on the live demo will not persist across restarts, and the live database is independent from the local development database. For full Admin CRUD functionality, please run the project locally following the steps below.
+
 ## Technical Implementation Highlights
 This project is a user-friendly system designed to manage product data efficiently. Here is how I built it:
 
