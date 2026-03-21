@@ -89,3 +89,7 @@ AI suggested reading `SECRET_KEY` and `DEBUG` from environment variables via `os
 
 ### `Dockerfile`
 AI suggested updating the `CMD` to invoke the import script via `python manage.py import_products`, which is the standard management command pattern instead of running the script file directly.
+
+### `products/templates/products/product_list.html`
+AI suggested the base CSS styling (layout, card design, color scheme). 
+The HTML structure, Django template logic, and JavaScript form handling were written independently.
