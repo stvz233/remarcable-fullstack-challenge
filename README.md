@@ -78,14 +78,8 @@ This project is a user-friendly system designed to manage product data efficient
 
 Based on the assignment's AI Policy, the following sections involved AI assistance (Gemini & Claude). I declare that I have reviewed and understood all AI-generated code, and all other parts not mentioned specifically below are written independently.
 
-### `products/models.py`
-AI was used to suggest the inline comments explaining each model class, field choice, and `Meta` configuration.
-
 ### `products/views.py`
 The `Q` object pattern for combining `name` and `description` search was AI-suggested.
-
-### `products/admin.py`
-AI helped write the inline comments explaining each `ModelAdmin` option.
 
 ### `products/management/commands/import_products.py`
 AI was used to refactor this script into a proper Django `BaseCommand` subclass (using `handle()`, `add_arguments()`, `self.stdout.write()`, and `self.style.SUCCESS()`).
