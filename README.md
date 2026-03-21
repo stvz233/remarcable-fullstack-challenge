@@ -33,10 +33,10 @@ On Windows:
 venv\Scripts\activate
 ```
 
-### 2. Install Django
+### 2. Install Dependencies
 
 ```bash
-pip install django
+pip install -r requirements.txt
 ```
 
 ### 3. Run Migrations
@@ -66,8 +66,26 @@ You don't need to manually add data! I have built an automated tool to handle th
 - **Automatic Import Using CSV Dataset**: Run the following command to load the sample data from `products.csv` into your local database:
 
 ```bash
-python products/management/commands/import_products.py
+python manage.py import_products
 ```
 
 - **Manual Import Using Admin**: If you prefer to add products manually, you can use the Django admin interface at `http://127.0.0.1:8000/admin/` (Requires the superuser created in step 4).
 
+## AI Attribution
+
+Based on the assignment's AI Policy, the following sections involved AI assistance (Gemini). I declare that I have reviewed and understood all AI-generated code.
+
+### `products/models.py`
+AI was used to suggest the inline comments explaining each model class, field choice, and `Meta` configuration. The model structure, field types, relationships (`ForeignKey`, `ManyToManyField`), and `related_name` values were designed and written independently.
+
+### `products/views.py`
+The `Q` object pattern for combining `name` and `description` search was AI-suggested.
+
+### `products/admin.py`
+AI helped write the inline comments explaining each `ModelAdmin` option. The `ImportExportModelAdmin` integration, `list_display`, `list_filter`, `search_fields`, and `filter_horizontal` configurations were chosen and written independently.
+
+### `products/management/commands/import_products.py`
+AI was used to refactor this script into a proper Django `BaseCommand` subclass (using `handle()`, `add_arguments()`, `self.stdout.write()`, and `self.style.SUCCESS()`).
+
+### `Dockerfile`
+AI suggested updating the `CMD` to invoke the import script via `python manage.py import_products` which was the standard management command pattern instead of running the script file directly.
