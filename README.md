@@ -55,8 +55,6 @@ Access the application at `http://127.0.0.1:8000/`
 
 ## Data Population
 
-You don't need to manually add data! I have built an automated tool to handle this:
-
 - **Automatic Import Using CSV Dataset**: Run the following command to load the sample data from `products.csv` into your local database:
 
 ```bash
