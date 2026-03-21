@@ -26,6 +26,9 @@ SECRET_KEY = "django-insecure-*(3dy$v8pdr+)co6px*u%afg&67mxjpzz(@0#&b6tf%k5x774s
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+]
 
 # Application definition
 # added the products app, which allowed Django to recognize and use the models, 
