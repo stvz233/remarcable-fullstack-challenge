@@ -53,6 +53,21 @@ python manage.py runserver
 
 Access the application at `http://127.0.0.1:8000/`
 
+
+## Docker Setup (Alternative to Local Development)
+
+### Prerequisites
+- Docker installed and running
+
+### Build and Run
+
+Step 1: Build the image
+docker build -t remarcable-app .
+
+Step 2: Run the container
+docker run -p 8000:10000 remarcable-app
+
+
 ## Data Population
 
 - **Automatic Import Using CSV Dataset**: Run the following command to load the sample data from `products.csv` into your local database:
